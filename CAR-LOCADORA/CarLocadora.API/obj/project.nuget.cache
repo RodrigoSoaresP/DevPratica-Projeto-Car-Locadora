@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "WDRI1D4q75yVu1scM+kVoX1+hP/fMcnwT4ZcUaEmKWCH0bAFtkX/Yxiyc9zpaoSBXhjzz97dzlKekBIYki6Eww==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora.API\\CarLocadora.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
