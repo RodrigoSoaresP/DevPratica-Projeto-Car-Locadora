@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora.Modelo\\CarLocadora.Modelo.csproj",
+      "projectUniqueName": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora.Modelo\\CarLocadora.Modelo.csproj",
       "projectName": "CarLocadora.Modelo",
-      "projectPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora.Modelo\\CarLocadora.Modelo.csproj",
+      "projectPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora.Modelo\\CarLocadora.Modelo.csproj",
       "packagesPath": "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora.Modelo\\obj\\",
+      "outputPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora.Modelo\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

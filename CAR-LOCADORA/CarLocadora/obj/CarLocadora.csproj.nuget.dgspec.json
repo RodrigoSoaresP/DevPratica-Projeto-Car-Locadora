@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj": {}
+    "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj": {
+    "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj",
+        "projectUniqueName": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj",
         "projectName": "CarLocadora",
-        "projectPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj",
+        "projectPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora\\CarLocadora.csproj",
         "packagesPath": "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\CAR-LOCADORA\\CarLocadora\\obj\\",
+        "outputPath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
