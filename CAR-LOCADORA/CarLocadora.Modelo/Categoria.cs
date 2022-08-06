@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarLocadora.Modelo
 {
-    public class Categoria 
+    public class Categoria
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required(ErrorMessage = "ID é obrigatorio.")]
-        public int Id { get; set; } 
+        public int ID { get; set; }
 
         [Display(Name = "Descrição")]
         [Required(ErrorMessage = "Descrição é obrigatorio.")]
@@ -17,7 +17,6 @@ namespace CarLocadora.Modelo
 
         [Display(Name = "Valor Diária")]
         [Required(ErrorMessage = "Valor diária é obrigatorio.")]
-        [StringLength(15, MinimumLength = 0, ErrorMessage = "caracteres mínimo 0 máximo de 15")]
         public decimal ValorDiaria { get; set; }
 
         [Required(ErrorMessage = "Ativo é obrigatório.")]

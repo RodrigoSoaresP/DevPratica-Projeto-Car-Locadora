@@ -13,7 +13,7 @@ namespace CarLocadora.Modelo
 
         [Display(Name = "Descrição")]
         [Required(ErrorMessage = "Descrição é obrigatorio.")]
-        [StringLength(1, MinimumLength = 150, ErrorMessage = "caracteres mínimo 1 máximo de 150")]
+        [StringLength(150, MinimumLength = 2, ErrorMessage = "caracteres mínimo 2 máximo de 150")]
         public string Descrição { get; set; } = string.Empty;
 
 
@@ -30,6 +30,6 @@ namespace CarLocadora.Modelo
 
 
 
-    
+
     }
 }

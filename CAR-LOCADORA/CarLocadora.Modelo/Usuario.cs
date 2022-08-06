@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarLocadora.Modelo
 {
-    public class Usuario: Endereco
+    public class Usuario : Endereco
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
