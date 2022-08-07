@@ -1,5 +1,6 @@
 ﻿using CarLocadora.Infra.Entity;
 using CarLocadora.Modelo;
+using CarLocadora.Negocio.UsuarioNegocio;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarLocadora.API.Controllers
@@ -8,14 +9,13 @@ namespace CarLocadora.API.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly Context _context;
+        private readonly IUsuarioNegocio _usuarioNegocio;
 
-        public UsuarioController(Context context)
+        public UsuarioController(IUsuarioNegocio usuarioNegocio)
+
 
         {
-
-            _context = context;
-
+            _usuarioNegocio = usuarioNegocio;
         }
 
         [HttpPost()]
@@ -23,9 +23,7 @@ namespace CarLocadora.API.Controllers
         public void Post([FromBody] Usuario usuario)
 
         {
-
-            _context.Usuarios.Add(usuario);
-            _context.SaveChanges();
+            _usuarioNegocio.Incluir(usuario);
 
         }
 
@@ -35,10 +33,18 @@ namespace CarLocadora.API.Controllers
 
         {
 
-            return _context.Usuarios.ToList();
+            return _usuarioNegocio.ObterLista();
 
         }
 
+        [HttpPut()]
 
+        public void Put([FromBody] Usuario usuario)
+
+        {
+
+            _usuarioNegocio.Alterar(usuario);
+
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CarLocadora.Infra.Entity;
 using CarLocadora.Modelo;
+using CarLocadora.Negocio.FormaPagamentoNegocio;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarLocadora.API.Controllers
@@ -8,14 +9,14 @@ namespace CarLocadora.API.Controllers
     [ApiController]
     public class FormaPagamentoController : ControllerBase
     {
-        private readonly Context _context;
+        private readonly IFormaPagamentoNegocio _formaPagamentoNegocio;
 
-        public FormaPagamentoController(Context context)
+
+        public FormaPagamentoController(IFormaPagamentoNegocio formaPagamentoNegocio)
+
 
         {
-
-            _context = context;
-
+            _formaPagamentoNegocio = formaPagamentoNegocio;
         }
 
         [HttpPost()]
@@ -24,8 +25,8 @@ namespace CarLocadora.API.Controllers
 
         {
 
-            _context.FormasPagamento.Add(pagamento);
-            _context.SaveChanges();
+            _formaPagamentoNegocio.Incluir(pagamento);
+
 
         }
 
@@ -35,7 +36,16 @@ namespace CarLocadora.API.Controllers
 
         {
 
-            return _context.FormasPagamento.ToList();
+            return _formaPagamentoNegocio.ObterLista();
+
+        }
+
+        [HttpPut()]
+        public void Put([FromBody] FormaPagamento pagamento)
+
+        {
+
+            _formaPagamentoNegocio.Alterar(pagamento);
 
         }
 
