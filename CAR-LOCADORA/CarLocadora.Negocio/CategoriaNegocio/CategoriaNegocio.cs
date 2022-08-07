@@ -12,7 +12,7 @@ namespace CarLocadora.Negocio.CategoriaNegocio
     {
         private readonly Context _context;
 
-            public CategoriaNegocio(Context context)
+        public CategoriaNegocio(Context context)
         {
             _context = context;
         }
@@ -30,13 +30,19 @@ namespace CarLocadora.Negocio.CategoriaNegocio
             return _context.Categorias.OrderBy(x => x.ID).ToList();
         }
 
-    
+
 
         public void Alterar(Categoria categoria)
         {
             _context.Categorias.Update(categoria);
             _context.SaveChanges();
         }
-      
+
+        public void Excluir(int id)
+        {
+            Categoria categoria = _context.Categorias.SingleOrDefault(x => x.ID == id);
+            _context.Categorias.Remove(categoria);
+            _context.SaveChangesAsync();
+        }
     }
 }

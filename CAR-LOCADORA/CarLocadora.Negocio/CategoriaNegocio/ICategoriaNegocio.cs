@@ -14,7 +14,6 @@ namespace CarLocadora.Negocio.CategoriaNegocio
 
         void Alterar(Categoria categoria);
 
-
-
+        void Excluir(int id);
     }
 }
