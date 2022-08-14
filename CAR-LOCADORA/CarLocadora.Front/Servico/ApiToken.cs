@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using CarLocadora.Front.Models;
+using CarLocadora.Models;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using CarLocadora.Models;
-using CarLocadora.Front.Models;
 
 namespace CarLocadora.Servico
 {
@@ -46,26 +46,24 @@ namespace CarLocadora.Servico
             }
             else
             {
-                throw new Exception("Deu Zica");
+                throw new Exception("Falha na autenticação, por favor tente novamente !");
             }
         }
 
-        //public string Obter()
-        //{
-        //    if (_loginRespostaModel.Value.Autenticado == false)
-        //    {
-        //        ObterToken();
-        //    }
-        //    else
-        //    {
-        //        if (DateTime.Now >= _loginRespostaModel.Value.DataExpiracao)
-        //        {
-        //            ObterToken();
-        //        }
-        //    }
-        //    return _loginRespostaModel.Value.Token;
-
-
-        //}
+        public string Obter()
+        {
+            if (_loginRespostaModel.Value.Autenticado == false)
+            {
+                ObterToken();
+            }
+            else
+            {
+                if (DateTime.Now >= _loginRespostaModel.Value.DataExpiracao)
+                {
+                    ObterToken();
+                }
+            }
+            return _loginRespostaModel.Value.Token;
+        }
     }
 }

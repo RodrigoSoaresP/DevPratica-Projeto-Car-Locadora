@@ -1,12 +1,13 @@
-﻿using CarLocadora.Infra.Entity;
-using CarLocadora.Modelo;
-using CarLocadora.Negocio.CategoriaNegocio;
+﻿using CarLocadora.Modelo;
+using CarLocadora.Negocio.Categoria;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarLocadora.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaNegocio _categoriaNegocio;
@@ -18,16 +19,16 @@ namespace CarLocadora.API.Controllers
 
         [HttpPost()]
 
-        public void Post([FromBody] Categoria categoria)
+        public void Post([FromBody] CategoriaModel categoria)
 
         {
-            _categoriaNegocio.Incluir(categoria);
+            _categoriaNegocio.Inserir(categoria);
 
         }
 
         [HttpGet()]
 
-        public async Task<List<Categoria>> Get()
+        public async Task<List<CategoriaModel>> Get()
 
         {
 
@@ -35,13 +36,19 @@ namespace CarLocadora.API.Controllers
 
         }
 
+        [HttpGet("ObterDados")]
+        public CategoriaModel Get([FromQuery] int id)
+        {
+            return _categoriaNegocio.Obter(id);
+        }
+
         [HttpPut()]
 
-        public void Put([FromBody] Categoria categoria)
+        public void Put([FromBody] CategoriaModel categoria)
 
         {
 
-             _categoriaNegocio.Alterar(categoria);
+            _categoriaNegocio.Alterar(categoria);
 
         }
 

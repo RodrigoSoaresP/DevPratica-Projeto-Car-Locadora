@@ -14,7 +14,7 @@ namespace CarLocadora.Token
                 DataExpiracao = null
             };
 
-            if (loginRequisicaoModel.Usuario == "RodrigoPSCarLocadora" && loginRequisicaoModel.Senha == "ProjetoCarLocadora_RPS")
+            if (loginRequisicaoModel.Usuario == "UsuarioDevPratica" && loginRequisicaoModel.Senha == "SenhaDevPratica")
             {
                 loginRespostaModel = new GeradorToken().GerarToken(loginRespostaModel);
             }
