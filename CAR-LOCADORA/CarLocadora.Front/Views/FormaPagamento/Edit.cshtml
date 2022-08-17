@@ -1,15 +1,16 @@
-﻿@model CarLocadora.Modelo.ClienteModel
+﻿@model CarLocadora.Modelo.FormaPagamentoModel
 
 @{
 	ViewData["Title"] = "Edit";
 }
 
-<h4>Editar Cliente</h4>
+<h4>Editar Forma de Pagamento </h4>
 
 <br />
 <div class="row">
 	<div class="col-md-12">
 		<form asp-action="Edit">
+			<input asp-for="Id" type="hidden">
 			<input asp-for="DataInclusao" type="hidden">
 			<input asp-for="DataAlteracao" type="hidden">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>

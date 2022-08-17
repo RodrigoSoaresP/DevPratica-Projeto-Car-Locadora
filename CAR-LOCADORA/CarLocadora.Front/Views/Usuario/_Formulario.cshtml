@@ -2,7 +2,7 @@
 
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="CPF" class="control-label"></label>
 			<input asp-for="CPF" class="form-control maskCPF" />
@@ -10,26 +10,25 @@
 		</div>
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="RG" class="control-label"></label>
 			<input asp-for="RG" class="form-control" />
 			<span asp-validation-for="RG" class="text-danger"></span>
 		</div>
 	</div>
-</div>
 
-
-<div class="row">
-	<div class="col-md-6">
+	<div class="col-md-5">
 		<div class="form-group">
 			<label asp-for="Nome" class="control-label"></label>
 			<input asp-for="Nome" class="form-control" />
 			<span asp-validation-for="Nome" class="text-danger"></span>
 		</div>
 	</div>
-
-		<div class="col-md-3">
+</div>
+<br />
+<div class="row">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="DataNascimento" class="control-label"></label>
 			<input asp-for="DataNascimento" class="form-control maskTelefone" />
@@ -37,8 +36,7 @@
 		</div>
 	</div>
 
-
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="Telefone" class="control-label"></label>
 			<input asp-for="Telefone" class="form-control maskTelefone" />
@@ -46,14 +44,15 @@
 		</div>
 	</div>
 
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="Celular" class="control-label"></label>
 			<input asp-for="Celular" class="form-control maskCelular" />
 			<span asp-validation-for="Celular" class="text-danger"></span>
 		</div>
 	</div>
-</div>
+
+	<br />
 
 	<div class="col-md-3">
 		<div class="form-group">
@@ -62,16 +61,18 @@
 			<span asp-validation-for="Senha" class="text-danger"></span>
 		</div>
 	</div>
+</div>
 
+<br />
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-7">
 		<div class="form-group">
 			<label asp-for="Logradouro" class="control-label"></label>
 			<input asp-for="Logradouro" class="form-control" />
 			<span asp-validation-for="Logradouro" class="text-danger"></span>
 		</div>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="Numero" class="control-label"></label>
 			<input asp-for="Numero" class="form-control" />
@@ -80,6 +81,7 @@
 	</div>
 </div>
 
+<br />
 
 <div class="row">
 	<div class="col-md-5">
@@ -90,7 +92,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="Cidade" class="control-label"></label>
 			<input asp-for="Cidade" class="form-control" />
@@ -98,7 +100,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="Estado" class="control-label"></label>
 			<input asp-for="Estado" class="form-control" />
@@ -107,8 +109,8 @@
 	</div>
 </div>
 
-
 <br />
+
 <div class="row">
 	<div class="col-md-2">
 		<div class="form-group form-check">
@@ -117,25 +119,8 @@
 			</label>
 		</div>
 	</div>
-
-	<div class="col-md-5">
-		<div class="form-group">
-			<label asp-for="DataInclusao" class="control-label"></label>
-			<input asp-for="DataInclusao" class="form-control" disabled />
-			<span asp-validation-for="DataInclusao" class="text-danger"></span>
-		</div>
 	</div>
-
-	<div class="col-md-5">
-		<div class="form-group">
-			<label asp-for="DataAlteracao" class="control-label"></label>
-			<input asp-for="DataAlteracao" class="form-control" disabled />
-			<span asp-validation-for="DataAlteracao" class="text-danger"></span>
-		</div>
-	</div>
-</div>
-
-
+	<br />
 <br />
 <div class="form-group">
 	<input type="submit" value="Salvar" class="btn btn-success" />

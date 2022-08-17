@@ -1,23 +1,20 @@
 ﻿@model CarLocadora.Modelo.CategoriaModel
 
 @{
-    ViewData["Title"] = "Categoria";
+	ViewData["Title"] = "Categoria";
 }
 
 <h3>Cadastrar Categoria</h3>
 <br />
 
 <div class="row">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <partial name="_Formulario"/>
-        </form>
-    </div>
+	<div class="col-md-12">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<partial name="_Formulario" />
+		</form>
+	</div>
 </div>
 <br />
 <div>
-   
-
 </div>

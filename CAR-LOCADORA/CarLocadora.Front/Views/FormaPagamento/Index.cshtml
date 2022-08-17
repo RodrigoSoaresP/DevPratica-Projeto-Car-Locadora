@@ -1,13 +1,12 @@
-﻿@model IEnumerable<CarLocadora.Modelo.UsuarioModel>
+﻿@model IEnumerable<CarLocadora.Modelo.FormaPagamentoModel>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-
 <p>
     <div align="center">
-		<h2>Usuários</h2>
+		<h2>Formas de Pagamento</h2>
 	</div>
 	<br />
   <a asp-action="Create"> <input class="btn btn-warning" value="Novo Cadastro" /></a>
@@ -16,22 +15,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CPF)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RG)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataNascimento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Celular)
+                @Html.DisplayNameFor(model => model.Descrição)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ativo)
@@ -42,29 +29,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.DataAlteracao)
             </th>
-           	<th>Ações</th>
+            	<th>Ações</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CPF)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RG)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataNascimento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Celular)
+                @Html.DisplayFor(modelItem => item.Descrição)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ativo)
@@ -76,7 +51,7 @@
                 @Html.DisplayFor(modelItem => item.DataAlteracao)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new {  CPF=item.CPF}, new {@class="btn btn-primary"}) @*|
+              @Html.ActionLink("Editar", "Edit", new {  Id=item.Id}, new {@class="btn btn-primary"}) @*|
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>

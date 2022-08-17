@@ -1,111 +1,116 @@
 ﻿@model IEnumerable<CarLocadora.Modelo.CategoriaModel>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
 <p>
- <a asp-action="Create"> <input class="btn btn-warning" value="Novo Cadastro" /></a>
+	<div align="center">
+		<h2>Categorias</h2>
+	</div>
+	<br />
+	<a asp-action="Create"> <input class="btn btn-warning" value="Novo Cadastro" /></a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValorDiaria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ativo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataInclusao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataAlteracao)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorDiaria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ativo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInclusao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataAlteracao)
-            </td>
-            <td>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Id)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Descricao)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ValorDiaria)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Ativo)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.DataInclusao)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.DataAlteracao)
+			</th>
+			<th>Ações</th>
 
-                @Html.ActionLink("Editar", "Edit", new {  ID=item.ID}, new {@class="btn btn-primary"})   
-               <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-cpf="@item.ID" data-bs-nome="@item.ID">Excluir</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Id)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Descricao)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ValorDiaria)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Ativo)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.DataInclusao)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.DataAlteracao)
+				</td>
+
+				<td>
+					@Html.ActionLink("Editar", "Edit", new {  Id=item.Id}, new {@class="btn btn-primary"})
+					<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-Id="@item.Id">Excluir</a>
+				</td>
+				
+			</tr>
+		}
+	</tbody>
 </table>
 
-
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Excluir Cliente</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div id='divModalTexto' class="mb-3">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                @Html.ActionLink("Excluir", "Delete", null, htmlAttributes: new { @class = "btn btn-primary" })
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Excluir Cadastro</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div id='divModalTexto' class="mb-3">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+				@Html.ActionLink("Excluir", "Delete", null, htmlAttributes: new { @class = "btn btn-danger" })
+			</div>
+		</div>
+	</div>
 </div>
 
-
 @section scripts {
-<script type="text/javascript">
+	<script type="text/javascript">
 
-    var exampleModal = document.getElementById('exampleModal')
-    exampleModal.addEventListener('show.bs.modal', function (event) {
+		var exampleModal = document.getElementById('exampleModal')
+		exampleModal.addEventListener('show.bs.modal', function(event) {
 
-    var button = event.relatedTarget
+			var button = event.relatedTarget
 
-    var cpf = button.getAttribute('data-bs-cpf')
-    var nome = button.getAttribute('data-bs-nome')
-
-
-    var modalBodyDiv = exampleModal.querySelector('.modal-body div')
-    modalBodyDiv.innerHTML = "Você confirma a exclusão de <b>" + nome + "?</b>"
-    + "<br />Não será possível resgatar este cliente após a confirmação!";
-
-    var modalFooterLink = exampleModal.querySelector('.modal-footer a ')
-    modalFooterLink.href = "/Cliente/Delete?cpf=" + cpf;
-
-    })
+			var Id = button.getAttribute('data-bs-Id')
+			//var Id = button.getAttribute('data-bs-Id')
 
 
-</script>
+			var modalBodyDiv = exampleModal.querySelector('.modal-body div')
+			modalBodyDiv.innerHTML = "Você confirma a exclusão da categoria: <b>" + Id + "?</b>"
+				+ "<br />Não será possível resgatar este cadastro após a confirmação!";
+
+			var modalFooterLink = exampleModal.querySelector('.modal-footer a ')
+			modalFooterLink.href = "/Categoria/Delete?id=" + Id;
+
+		})
+
+
+	</script>
 
 
 }
