@@ -1,0 +1,19 @@
+﻿@model CarLocadora.Modelo.ManutencaoVeiculoModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>Editar Manutenção</h4>
+<hr class="bg-white" />
+<form asp-action="Edit">
+    <input asp-for="Id" type="hidden" />
+    <input asp-for="DataInclusao" type="hidden" />
+    <partial name="_Formulario" />
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
