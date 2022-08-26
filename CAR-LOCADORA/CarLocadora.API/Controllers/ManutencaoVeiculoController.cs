@@ -3,14 +3,11 @@ using CarLocadora.Negocio.ManutencaoVeiculo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
-
 namespace CarLocadora.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-
     public class ManutencaoVeiculoController : ControllerBase
     {
         private readonly IManutencaoVeiculoNegocio _manutencaoVeiculoNegocio;
@@ -20,40 +17,48 @@ namespace CarLocadora.API.Controllers
             _manutencaoVeiculoNegocio = manutencaoVeiculoNegocio;
         }
 
-        // GET: api/<ManutencaoVeiculoController>
-        [HttpGet()]
-        public List<ManutencaoVeiculoModel> Get()
+        [HttpPost()]
+
+        public void Post([FromBody] ManutencaoVeiculoModel manutencaoVeiculoModel)
+
         {
-            return _manutencaoVeiculoNegocio.ObterLista();
+            _manutencaoVeiculoNegocio.Inserir(manutencaoVeiculoModel);
+
         }
 
-        // GET api/<ManutencaoVeiculoController>/5
-        [HttpGet("{id}")]
+        [HttpGet()]
+
+        public async Task<List<ManutencaoVeiculoModel>> Get()
+
+        {
+
+            return _manutencaoVeiculoNegocio.ObterLista();
+
+        }
+
+        [HttpGet("ObterDados")]
         public ManutencaoVeiculoModel Get([FromQuery] int id)
         {
             return _manutencaoVeiculoNegocio.Obter(id);
-
         }
 
-        // POST api/<ManutencaoVeiculoController>
-        [HttpPost]
-        public void Post([FromBody] ManutencaoVeiculoModel manutencaoVeiculoModel)
-        {
-            _manutencaoVeiculoNegocio.Inserir(manutencaoVeiculoModel);
-        }
+        [HttpPut()]
 
-        // PUT api/<ManutencaoVeiculoController>/5
-        [HttpPut]
         public void Put([FromBody] ManutencaoVeiculoModel manutencaoVeiculoModel)
+
         {
+
             _manutencaoVeiculoNegocio.Alterar(manutencaoVeiculoModel);
+
         }
 
-        // DELETE api/<ManutencaoVeiculoController>/5
-        [HttpDelete("{id}")]
+
+        [HttpDelete()]
         public void Delete([FromQuery] int id)
         {
             _manutencaoVeiculoNegocio.Excluir(id);
         }
+
+
     }
 }

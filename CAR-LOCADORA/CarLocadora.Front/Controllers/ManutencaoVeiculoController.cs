@@ -21,7 +21,7 @@ namespace CarLocadora.Front.Controllers
 
         }
         // GET: ManutencaoVeiculoController
-        public async Task<IActionResult> Index(string? mensagem = null, bool sucesso = true)
+        public ActionResult Index(string? mensagem = null, bool sucesso = true)
         {
             if (sucesso)
                 TempData["sucesso"] = mensagem;
@@ -47,22 +47,23 @@ namespace CarLocadora.Front.Controllers
         }
 
         // GET: ManutencaoVeiculoController/Details/5
-        public async Task<IActionResult> Details(int id)
+        public ActionResult Details(string id)
         {
             return View();
         }
 
         // GET: ManutencaoVeiculoController/Create
-        public async Task<IActionResult> Create()
+        public ActionResult Create()
         {
             ViewBag.Veiculos = CarregarVeiculos();
+
             return View();
         }
 
         // POST: ManutencaoVeiculoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([FromForm] ManutencaoVeiculoModel model)
+        public ActionResult Create([FromForm] ManutencaoVeiculoModel model)
         {
             try
             {
@@ -99,14 +100,14 @@ namespace CarLocadora.Front.Controllers
         }
 
         // GET: ManutencaoVeiculoController/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public ActionResult Edit(int id)
         {
             HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
 
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}ManutencaoVeiculo?Id={id}").Result;
+            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}ManutencaoVeiculo/ObterDados?Id={id}").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -124,7 +125,7 @@ namespace CarLocadora.Front.Controllers
         // POST: ManutencaoVeiculoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([FromForm] ManutencaoVeiculoModel model)
+        public ActionResult Edit([FromForm] ManutencaoVeiculoModel model)
         {
             try
             {
@@ -157,7 +158,7 @@ namespace CarLocadora.Front.Controllers
 
 
         // GET: ManutencaoVeiculoController/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public ActionResult Delete(int id)
         {
             try
             {
@@ -183,7 +184,7 @@ namespace CarLocadora.Front.Controllers
         // POST: ManutencaoVeiculoController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

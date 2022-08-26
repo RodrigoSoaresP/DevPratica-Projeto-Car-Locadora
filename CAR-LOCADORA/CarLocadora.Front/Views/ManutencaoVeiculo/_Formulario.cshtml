@@ -1,11 +1,9 @@
 ﻿@model CarLocadora.Modelo.ManutencaoVeiculoModel
 
 
-
-
 <div class="row">
 
-	<div class="col-md-12">
+	<div class="col-md-5">
 		<div class="form-group">
 			<label asp-for="VeiculoPlaca" class="control-label"></label>
 			<select asp-for="VeiculoPlaca" asp-items="ViewBag.Veiculos" class="form-control text-uppercase">
@@ -13,16 +11,17 @@
 		</div>
 	</div>
 
-
-	<div class="col-md-6">
+	<div class="col-md-7">
 		<div class="form-group">
 			<label asp-for="Descricao" class="control-label"></label>
 			<input asp-for="Descricao" class="form-control" />
 			<span asp-validation-for="Descricao" class="text-danger"></span>
 		</div>
 	</div>
-
-	<div class="col-md-6">
+</div>
+<br />
+<div class="row">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="DataServico" class="control-label"></label>
 			<input asp-for="DataServico" class="form-control" />
@@ -30,7 +29,8 @@
 		</div>
 	</div>
 
-	<div class="col-md-6">
+
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="Garantia" class="control-label"></label>
 			<input asp-for="Garantia" class="form-control" />
@@ -38,7 +38,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="ValorServico" class="control-label"></label>
 			<input asp-for="ValorServico" class="form-control" />
@@ -46,9 +46,8 @@
 		</div>
 	</div>
 </div>
+<br />
 
-<br />
-<br />
 
 <div class="form-group">
 	<input type="submit" value="Salvar" class="btn btn-success" />

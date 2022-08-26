@@ -32,7 +32,11 @@ namespace CarLocadora.Negocio.ManutencaoVeiculo
             _context.AddAsync(model);
             _context.SaveChangesAsync();
         }
-        public ManutencaoVeiculoModel Obter(int id) => _context.ManutencaoVeiculo.SingleOrDefault(x => x.Id.Equals(id));
+
+        public ManutencaoVeiculoModel Obter(int id)
+        {
+            return _context.ManutencaoVeiculo.SingleOrDefault(x => x.Id.Equals(id));
+        }
 
         public List<ManutencaoVeiculoModel> ObterLista() => _context.ManutencaoVeiculo.ToList();
 

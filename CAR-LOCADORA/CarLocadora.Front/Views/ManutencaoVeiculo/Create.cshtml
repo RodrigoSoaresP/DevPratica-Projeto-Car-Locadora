@@ -7,17 +7,14 @@
 <h4>Cadastrar Manutenção</h4>
 <br />
 
-<form asp-action="Create">
-    <input asp-for="Id" type="hidden" />
-    <input asp-for="DataInclusao" type="hidden" />
-    <input asp-for="DataAlteracao" type="hidden" />
-    <partial name="_Formulario" />
-</form>
-
-
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+<div class="row">
+	<div class="col-md-12">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<partial name="_Formulario" />
+		</form>
+	</div>
+</div>
+<br />
+<div>
+</div>
