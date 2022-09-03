@@ -11,6 +11,7 @@
 	<br />
 	<a asp-action="Create"> <input class="btn btn-warning" value="Novo Cadastro" /></a>
 </p>
+	<br />
 <table class="table">
 	<thead>
 		<tr>
@@ -33,6 +34,7 @@
 			<th>
 				@Html.DisplayNameFor(model => model.KmEntrada)
 			</th>
+				<th>Ações</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -106,7 +108,7 @@
 				+ "<br />Não será possível resgatar este cadastro após a confirmação!";
 
 			var modalFooterLink = exampleModal.querySelector('.modal-footer a ')
-			modalFooterLink.href = "/Vistoria/Delete?id=" + Id;
+			modalFooterLink.href = "/Vistoria/Delete?Id=" + Id;
 
 		})
 
