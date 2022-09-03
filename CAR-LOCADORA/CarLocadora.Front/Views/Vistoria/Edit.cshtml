@@ -1,0 +1,24 @@
+﻿@model CarLocadora.Modelo.VistoriaModel
+
+@{
+	ViewData["Title"] = "Edit";
+}
+
+<h4>Editar Categoria</h4>
+<hr class="bg-white" />
+<div class="col-md-12">
+	<form asp-action="Edit">
+		<input asp-for="Id" type="hidden">
+		<input asp-for="DataInclusao" type="hidden">
+		<input asp-for="DataAlteracao" type="hidden">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<partial name="_Formulario" />
+	</form>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	}

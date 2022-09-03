@@ -22,25 +22,27 @@ namespace CarLocadora.API.Controllers
         public void Post([FromBody] LocacaoModel locacao)
 
         {
+            locacao.DataInclusao = DateTime.Now;
+            locacao.DataAlteracao = null;
             _locacaoNegocio.Inserir(locacao);
 
         }
 
-        //[HttpGet()]
+        [HttpGet()]
 
-        //public async Task<List<LocacaoModel>> Get()
+        public async Task<List<LocacaoModel>> Get()
 
-        //{
+        {
 
-        //    return _locacaoNegocio.ObterLista();
+            return _locacaoNegocio.ObterLista();
 
-        //}
+        }
 
-        //[HttpGet("ObterDados")]
-        //public LocacaoModel Get([FromQuery] int id)
-        //{
-        //    return _locacaoNegocio.Obter(id);
-        //}
+        [HttpGet("ObterDados")]
+        public LocacaoModel Get([FromQuery] int id)
+        {
+            return _locacaoNegocio.Obter(id);
+        }
 
         [HttpPut()]
 
@@ -53,11 +55,11 @@ namespace CarLocadora.API.Controllers
         }
 
 
-        //[HttpDelete()]
-        //public void Delete([FromQuery] int id)
-        //{
-        //    _locacaoNegocio.Excluir(id);
-        //}
+        [HttpDelete()]
+        public void Delete([FromQuery] int id)
+        {
+            _locacaoNegocio.Excluir(id);
+        }
 
 
     }

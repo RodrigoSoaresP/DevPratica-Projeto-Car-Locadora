@@ -1,0 +1,20 @@
+﻿@model CarLocadora.Modelo.VistoriaModel
+
+@{
+	ViewData["Title"] = "Vistoria";
+}
+
+<h3>Cadastrar Vistoria</h3>
+<br />
+
+<div class="row">
+	<div class="col-md-12">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<partial name="_Formulario" />
+		</form>
+	</div>
+</div>
+<br />
+<div>
+</div>

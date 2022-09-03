@@ -22,25 +22,27 @@ namespace CarLocadora.API.Controllers
         public void Post([FromBody] VistoriaModel vistoria)
 
         {
+            vistoria.DataInclusao = DateTime.Now;
+            vistoria.DataAlteracao = null;
             _vistoriaNegocio.Inserir(vistoria);
 
         }
 
-        //[HttpGet()]
+        [HttpGet()]
 
-        //public async Task<List<VistoriaModel>> Get()
+        public async Task<List<VistoriaModel>> Get()
 
-        //{
+        {
 
-        //    return _vistoriaNegocio.ObterLista();
+            return _vistoriaNegocio.ObterLista();
 
-        //}
+        }
 
-        //[HttpGet("ObterDados")]
-        //public VistoriaModel Get([FromQuery] int id)
-        //{
-        //    return _vistoriaNegocio.Obter(id);
-        //}
+        [HttpGet("ObterDados")]
+        public VistoriaModel Get([FromQuery] int id)
+        {
+            return _vistoriaNegocio.Obter(id);
+        }
 
         [HttpPut()]
 
@@ -49,15 +51,18 @@ namespace CarLocadora.API.Controllers
         {
 
             _vistoriaNegocio.Alterar(vistoria);
+            vistoria.DataAlteracao = null;
+            vistoria.DataInclusao = DateTime.Now;
+    
 
         }
 
 
-        //[HttpDelete()]
-        //public void Delete([FromQuery] int id)
-        //{
-        //    _vistoriaNegocio.Excluir(id);
-        //}
+        [HttpDelete()]
+        public void Delete([FromQuery] int id)
+        {
+            _vistoriaNegocio.Excluir(id);
+        }
 
 
     }

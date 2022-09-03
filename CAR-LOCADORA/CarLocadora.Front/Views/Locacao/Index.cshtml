@@ -1,0 +1,99 @@
+﻿@model IEnumerable<CarLocadora.Modelo.LocacaoModel>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<p>
+	<div align="center">
+		<h2>Locacões</h2>
+	</div>
+	<br />
+	<a asp-action="Create"> <input class="btn btn-warning" value="Novo Cadastro" /></a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			 <th>
+                @Html.DisplayNameFor(model => model.ClienteCPF)
+            </th>
+        
+       
+            <th>
+                @Html.DisplayNameFor(model => model.VeiculoPlaca)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+       
+            <td>
+                @Html.DisplayFor(modelItem => item.ClienteCPF)
+            </td>
+      
+        
+            <td>
+                @Html.DisplayFor(modelItem => item.VeiculoPlaca)
+            </td>
+
+
+				<td>
+					@Html.ActionLink("Editar", "Edit", new {  Id=item.Id}, new {@class="btn btn-primary"})
+					<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-Id="@item.Id">Excluir</a>
+				</td>
+				
+			</tr>
+		}
+	</tbody>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Excluir Cadastro</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div id='divModalTexto' class="mb-3">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+				@Html.ActionLink("Excluir", "Delete", null, htmlAttributes: new { @class = "btn btn-danger" })
+			</div>
+		</div>
+	</div>
+</div>
+
+@section scripts {
+	<script type="text/javascript">
+
+		var exampleModal = document.getElementById('exampleModal')
+		exampleModal.addEventListener('show.bs.modal', function(event) {
+
+			var button = event.relatedTarget
+
+			var Id = button.getAttribute('data-bs-Id')
+			//var Id = button.getAttribute('data-bs-Id')
+
+
+			var modalBodyDiv = exampleModal.querySelector('.modal-body div')
+			modalBodyDiv.innerHTML = "Você confirma a exclusão da locação: <b>" + Id + "?</b>"
+				+ "<br />Não será possível resgatar este cadastro após a confirmação!";
+
+			var modalFooterLink = exampleModal.querySelector('.modal-footer a ')
+			modalFooterLink.href = "/Locacao/Delete?id=" + Id;
+
+		})
+
+
+	</script>
+
+
+}
+
+
