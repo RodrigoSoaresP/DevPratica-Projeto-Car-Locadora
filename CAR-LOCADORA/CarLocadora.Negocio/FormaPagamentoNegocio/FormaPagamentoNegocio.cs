@@ -1,42 +1,38 @@
 ﻿using CarLocadora.Infra.Entity;
 using CarLocadora.Modelo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace CarLocadora.Negocio.FormaPagamentoNegocio
+namespace CarLocadora.Negocio.FormasPagamento
 {
     public class FormaPagamentoNegocio : IFormaPagamentoNegocio
     {
         private readonly Context _context;
 
-            public FormaPagamentoNegocio(Context context)
+        public async Task<List<FormaPagamentoModel>> ObterLista()
         {
-            _context = context;
+            return await _context.FormasPagamento.OrderBy(x => x.Id).ToListAsync();
         }
-
-
-        public void Incluir(FormaPagamento pagamento)
+        public async Task<FormaPagamentoModel> Obter(int id)
         {
-            _context.FormasPagamento.Add(pagamento);
-            _context.SaveChanges();
+            return await _context.FormasPagamento.SingleAsync(x => x.Id.Equals(id));
+
         }
-
-        public List<FormaPagamento> ObterLista()
-        {
-            //return _context.FormasPagamento.ToList();
-            return _context.FormasPagamento.OrderBy(x => x.ID).ToList();
-        }
-
-    
-
-        public void Alterar(FormaPagamento pagamento)
+        public async Task Alterar(FormaPagamentoModel pagamento)
         {
             _context.FormasPagamento.Update(pagamento);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-      
+        public async Task Inserir(FormaPagamentoModel pagamento)
+        {
+            _context.FormasPagamento.Add(pagamento);
+            _context.SaveChangesAsync();
+        }
+
+        public async Task Excluir(int pagamento)
+        {
+            var id = _context.FormasPagamento.Single(x => x.Id.Equals(pagamento));
+            _context.FormasPagamento.Remove(id);
+            await _context.SaveChangesAsync();
+        }
     }
 }

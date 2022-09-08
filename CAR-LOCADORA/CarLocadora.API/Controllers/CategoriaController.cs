@@ -12,53 +12,52 @@ namespace CarLocadora.API.Controllers
     {
         private readonly ICategoriaNegocio _categoriaNegocio;
 
-        public CategoriaController(ICategoriaNegocio categoriaNegocio)
+        public CategoriaController(ICategoriaNegocio categoria)
         {
-            _categoriaNegocio = categoriaNegocio;
+            _categoriaNegocio = categoria;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<CategoriaModel>> Get()
+        {
+
+            return await _categoriaNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<CategoriaModel> Get([FromQuery] int id)
+        {
+
+            return await _categoriaNegocio.Obter(id);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] CategoriaModel categoria)
-
+        public async Task Post([FromBody] CategoriaModel categoria)
         {
-            _categoriaNegocio.Inserir(categoria);
-
+            categoria.DataInclusao = DateTime.Now;
+            categoria.DataAlteracao = null;
+            await _categoriaNegocio.Inserir(categoria);
         }
 
-        [HttpGet()]
-
-        public async Task<List<CategoriaModel>> Get()
-
-        {
-
-            return _categoriaNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public CategoriaModel Get([FromQuery] int id)
-        {
-            return _categoriaNegocio.Obter(id);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] CategoriaModel categoria)
-
+        public async Task Put([FromBody] CategoriaModel categoria)
         {
-
-            _categoriaNegocio.Alterar(categoria);
-
+            categoria.DataAlteracao = DateTime.Now;
+            await _categoriaNegocio.Alterar(categoria);
         }
-
 
         [HttpDelete()]
-        public void Delete([FromQuery] int id)
+        public async Task Delete([FromQuery] int id)
         {
-            _categoriaNegocio.Excluir(id);
-        }
 
+            //Utilizando o Entity
+            await _categoriaNegocio.Excluir(id);
+        }
 
     }
 }

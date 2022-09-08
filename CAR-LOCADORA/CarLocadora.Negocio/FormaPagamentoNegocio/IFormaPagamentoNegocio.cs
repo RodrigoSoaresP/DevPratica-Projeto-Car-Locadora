@@ -1,20 +1,14 @@
 ﻿using CarLocadora.Modelo;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CarLocadora.Negocio.FormaPagamentoNegocio
+
+namespace CarLocadora.Negocio.FormasPagamento
 {
     public interface IFormaPagamentoNegocio
     {
-        List<FormaPagamento> ObterLista();
-
-        void Incluir(FormaPagamento pagamento);
-
-        void Alterar(FormaPagamento pagamento);
-
-
-
+        Task<List<FormaPagamentoModel>> ObterLista();
+        Task<FormaPagamentoModel> Obter(int id);
+        Task Alterar(FormaPagamentoModel pagamento);
+        Task Inserir(FormaPagamentoModel pagamento);
+        Task Excluir(int id);
     }
 }

@@ -21,67 +21,39 @@ namespace CarLocadora.Controllers
             _dadosBase = dadosBase;
             _apiToken = apiToken;
         }
-        public ActionResult Index(string mensagem = null, bool sucesso = true)
+        public async Task<IActionResult> Index()
         {
-            if (sucesso)
-                TempData["Sucesso"] = mensagem;
-            else
-                TempData["Erro"] = mensagem;
-
+         
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria").Result;
+            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria");
 
             if (response.IsSuccessStatusCode)
             {
-                string conteudo = response.Content.ReadAsStringAsync().Result;
+                string conteudo = await response.Content.ReadAsStringAsync();
                 return View(JsonConvert.DeserializeObject<List<VistoriaModel>>(conteudo));
             }
             else
             {
-                throw new Exception("Erro ao tentar mostrar a lista de Vistorias!!");
+                throw new Exception("Algo deu errado");
             }
 
         }
 
-
-        public ActionResult Details(string id)
-        {
-
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
-
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria/ObterDados?Id={id}").Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string conteudo = response.Content.ReadAsStringAsync().Result;
-                return View(JsonConvert.DeserializeObject<VistoriaModel>(conteudo));
-            }
-            else
-            {
-                throw new Exception("Erro ao tentar mostrar os detalhes da Vistoria!!");
-            }
-
-
-        }
-
-        // GET: ClienteController/Create
-        public ActionResult Create()
+        // GET: VistoriaController/Create
+        public async Task<IActionResult> Create()
         {
             ViewBag.Locacoes = CarregarLocacoes().Result;
             return View();
         }
 
-        // POST: ClienteController/Create
+        // POST: VistoriaController/Create
         [HttpPost]
-        public ActionResult Create([FromForm] VistoriaModel vistoria)
+        public async Task<IActionResult> Create([FromForm] VistoriaModel vistoria)
         {
 
             try
@@ -93,18 +65,18 @@ namespace CarLocadora.Controllers
                     HttpClient client = new HttpClient();
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-                    HttpResponseMessage response = client.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria", vistoria).Result;
+                    HttpResponseMessage response = await client.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria", vistoria);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        return RedirectToAction(nameof(Index), new { mensagem = "Registro cadastraado!", sucesso = true });
+                        return RedirectToAction(nameof(Index), new { mensagem = "Registro cadastrado!", sucesso = true });
 
                     }
                     else
                     {
-                        throw new Exception("Erro ao tentar inserir uma nova Vistoria!!");
+                        throw new Exception("Algo deu errado");
                     }
 
 
@@ -123,33 +95,33 @@ namespace CarLocadora.Controllers
             }
         }
 
-        // GET: ClienteController/Edit/5
-        public ActionResult Edit(string id)
+        // GET: VistoriaController/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria/ObterDados?Id={id}").Result;
+            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria/ObterDados?Id={id}");
 
             if (response.IsSuccessStatusCode)
             {
 
                 ViewBag.locacoes = CarregarLocacoes().Result;
-                string conteudo = response.Content.ReadAsStringAsync().Result;
+                string conteudo = await response.Content.ReadAsStringAsync();
                 return View(JsonConvert.DeserializeObject<VistoriaModel>(conteudo));
             }
             else
             {
-                throw new Exception("Erro ao tentar editar uma Vistoria!!");
+                throw new Exception("Algo deu errado");
             }
         }
 
-        // POST: ClienteController/Edit/5
+        // POST: VistoriaController/Edit/5
         [HttpPost]
-        public ActionResult Edit([FromForm] VistoriaModel vistoria)
+        public async Task<IActionResult> Edit([FromForm] VistoriaModel vistoria)
         {
             try
             {
@@ -159,9 +131,9 @@ namespace CarLocadora.Controllers
                     HttpClient client = new HttpClient();
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-                    HttpResponseMessage response = client.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria", vistoria).Result;
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Vistoria", vistoria);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -192,20 +164,20 @@ namespace CarLocadora.Controllers
 
 
 
-        private List<SelectListItem> Locacao()
+        private async Task <List<SelectListItem>> Locacao()
         {
             List<SelectListItem> lista = new List<SelectListItem>();
 
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Locacao").Result;
+            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Locacao");
 
             if (response.IsSuccessStatusCode)
             {
-                string conteudo = response.Content.ReadAsStringAsync().Result;
+                string conteudo = await response.Content.ReadAsStringAsync();
                 List<LocacaoModel> locacao = JsonConvert.DeserializeObject<List<LocacaoModel>>(conteudo);
 
                 foreach (var linha in locacao)
@@ -227,10 +199,6 @@ namespace CarLocadora.Controllers
         }
 
 
-
-
-
-
         private async Task<List<SelectListItem>> CarregarLocacoes()
         {
             List<SelectListItem> lista = new List<SelectListItem>();
@@ -238,7 +206,7 @@ namespace CarLocadora.Controllers
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
             HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Locacao");
 

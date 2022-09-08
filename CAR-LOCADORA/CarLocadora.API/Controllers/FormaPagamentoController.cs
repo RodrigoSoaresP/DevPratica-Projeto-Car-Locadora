@@ -11,54 +11,51 @@ namespace CarLocadora.API.Controllers
     public class FormaPagamentoController : ControllerBase
     {
         private readonly IFormaPagamentoNegocio _formaPagamentoNegocio;
-
-        public FormaPagamentoController(IFormaPagamentoNegocio formaPagamentoNegocio)
+        public FormaPagamentoController(IFormaPagamentoNegocio pagamento)
         {
-            _formaPagamentoNegocio = formaPagamentoNegocio;
+            _formaPagamentoNegocio = pagamento;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<FormaPagamentoModel>> Get()
+        {
+
+            return await _formaPagamentoNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<FormaPagamentoModel> Get([FromQuery] int id)
+        {
+
+            return await _formaPagamentoNegocio.Obter(id);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] FormaPagamentoModel pagamento)
-
+        public async Task Post([FromBody] FormaPagamentoModel pagamento)
         {
-            _formaPagamentoNegocio.Inserir(pagamento);
-
+            pagamento.DataInclusao = DateTime.Now;
+            pagamento.DataAlteracao = null;
+            await _formaPagamentoNegocio.Inserir(pagamento);
         }
 
-        [HttpGet()]
-
-        public async Task<List<FormaPagamentoModel>> Get()
-
-        {
-
-            return _formaPagamentoNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public FormaPagamentoModel Get([FromQuery] int id)
-        {
-            return _formaPagamentoNegocio.Obter(id);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] FormaPagamentoModel pagamento)
-
+        public async Task Put([FromBody] FormaPagamentoModel pagamento)
         {
-
-            _formaPagamentoNegocio.Alterar(pagamento);
-
+            pagamento.DataAlteracao = DateTime.Now;
+            await _formaPagamentoNegocio.Alterar(pagamento);
         }
 
+        [HttpDelete()]
+        public async Task Delete([FromQuery] int id)
+        {
 
-        //[HttpDelete()]
-        //public void Delete([FromQuery] int id)
-        //{
-        //    _formaPagamentoNegocio.Excluir(id);
-        //}
-
+            await _formaPagamentoNegocio.Excluir(id);
+        }
 
     }
 }

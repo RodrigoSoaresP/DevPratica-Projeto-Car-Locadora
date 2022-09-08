@@ -1,48 +1,45 @@
-﻿using CarLocadora.Infra.Entity;
+﻿
+using CarLocadora.Infra.Entity;
 using CarLocadora.Modelo;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarLocadora.Negocio.CategoriaNegocio
+namespace CarLocadora.Negocio.Categoria
 {
     public class CategoriaNegocio : ICategoriaNegocio
     {
         private readonly Context _context;
 
-        public CategoriaNegocio(Context context)
+        public async Task<List<CategoriaModel>> ObterLista()
         {
-            _context = context;
+            return await _context.Categorias.OrderBy(x => x.Id).ToListAsync();
         }
-
-
-        public void Incluir(Categoria categoria)
+        public async Task<CategoriaModel> Obter(int id)
         {
-            _context.Categorias.AddAsync(categoria);
-            _context.SaveChanges();
+            return await _context.Categorias.SingleAsync(x => x.Id.Equals(id));
+
         }
-
-        public List<Categoria> ObterLista()
-        {
-            //return _context.Categorias.ToList();
-            return _context.Categorias.OrderBy(x => x.ID).ToList();
-        }
-
-
-
-        public void Alterar(Categoria categoria)
+        public async Task Alterar(CategoriaModel categoria)
         {
             _context.Categorias.Update(categoria);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+        }
+        public async Task Inserir(CategoriaModel categoria)
+        {
+            _context.Categorias.AddAsync(categoria);
+            await _context.SaveChangesAsync();
         }
 
-        public void Excluir(int id)
+        public async Task Excluir(int valor)
         {
-            Categoria categoria = _context.Categorias.SingleOrDefault(x => x.ID == id);
-            _context.Categorias.Remove(categoria);
-            _context.SaveChangesAsync();
+            var id = _context.Categorias.Single(x => x.Id.Equals(valor));
+            _context.Categorias.Remove(id);
+            _context.SaveChanges();
+
         }
     }
 }

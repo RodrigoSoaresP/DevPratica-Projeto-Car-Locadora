@@ -12,53 +12,51 @@ namespace CarLocadora.API.Controllers
     {
         private readonly IClienteNegocio _clienteNegocio;
 
-        public ClienteController(IClienteNegocio clienteNegocio)
+        public ClienteController(IClienteNegocio cliente)
         {
-            _clienteNegocio = clienteNegocio;
+            _clienteNegocio = cliente;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<ClienteModel>> Get()
+        {
+
+            return await _clienteNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<ClienteModel> Get([FromQuery] int cpf)
+        {
+
+            return await _clienteNegocio.Obter(cpf);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] ClienteModel cliente)
-
+        public async Task Post([FromBody] ClienteModel cliente)
         {
-            _clienteNegocio.Inserir(cliente);
-
+            cliente.DataInclusao = DateTime.Now;
+            cliente.DataAlteracao = null;
+            await _clienteNegocio.Inserir(cliente);
         }
 
-        [HttpGet()]
-
-        public async Task<List<ClienteModel>> Get()
-
-        {
-
-            return _clienteNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public ClienteModel Get([FromQuery] string cpf)
-        {
-            return _clienteNegocio.Obter(cpf);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] ClienteModel cliente)
-
+        public async Task Put([FromBody] ClienteModel cliente)
         {
-
-            _clienteNegocio.Alterar(cliente);
-
+            cliente.DataAlteracao = DateTime.Now;
+            await _clienteNegocio.Alterar(cliente);
         }
 
+        [HttpDelete()]
+        public async Task Delete([FromQuery] int cpf)
+        {
 
-        //[HttpDelete()]
-        //public void Delete([FromQuery] int id)
-        //{
-        //    _clienteNegocio.Excluir(id);
-        //}
-
+            await _clienteNegocio.Excluir(cpf);
+        }
 
     }
 }

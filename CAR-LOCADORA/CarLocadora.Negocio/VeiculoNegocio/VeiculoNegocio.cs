@@ -1,41 +1,39 @@
 ﻿using CarLocadora.Infra.Entity;
 using CarLocadora.Modelo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace CarLocadora.Negocio.VeiculoNegocio
+namespace CarLocadora.Negocio.Veiculo
 {
     public class VeiculoNegocio : IVeiculoNegocio
     {
         private readonly Context _context;
 
-        public VeiculoNegocio(Context context)
+        public async Task<List<VeiculoModel>> ObterLista()
         {
-            _context = context;
+            return await _context.Veiculos.OrderBy(x => x.Placa).ToListAsync();
         }
-
-
-        public void Incluir(Veiculo veiculo)
+        public async Task<VeiculoModel> Obter(int placa)
         {
-            _context.Veiculos.AddAsync(veiculo);
-            _context.SaveChanges();
+            return await _context.Veiculos.SingleAsync(x => x.Placa.Equals(placa));
+
         }
-
-        public List<Veiculo> ObterLista()
-        {
-            //return _context.Veiculos.ToList();
-            return _context.Veiculos.OrderBy(x => x.Placa).ToList();
-        }
-
-
-        public void Alterar(Veiculo veiculo)
+        public async Task Alterar(VeiculoModel veiculo)
         {
             _context.Veiculos.Update(veiculo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+        }
+        public async Task Inserir(VeiculoModel veiculo)
+        {
+            _context.Veiculos.AddAsync(veiculo);
+            await _context.SaveChangesAsync();
         }
 
+        public async Task Excluir(int veiculo)
+        {
+            var id = _context.Veiculos.Single(x => x.Placa.Equals(veiculo));
+            _context.Veiculos.Remove(id);
+            _context.SaveChanges();
+
+        }
     }
 }

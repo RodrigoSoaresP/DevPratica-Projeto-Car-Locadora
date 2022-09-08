@@ -12,53 +12,51 @@ namespace CarLocadora.API.Controllers
     {
         private readonly IManutencaoVeiculoNegocio _manutencaoVeiculoNegocio;
 
-        public ManutencaoVeiculoController(IManutencaoVeiculoNegocio manutencaoVeiculoNegocio)
+        public ManutencaoVeiculoController(IManutencaoVeiculoNegocio manutencao)
         {
-            _manutencaoVeiculoNegocio = manutencaoVeiculoNegocio;
+            _manutencaoVeiculoNegocio = manutencao;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<ManutencaoVeiculoModel>> Get()
+        {
+
+            return await _manutencaoVeiculoNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<ManutencaoVeiculoModel> Get([FromQuery] int id)
+        {
+
+            return await _manutencaoVeiculoNegocio.Obter(id);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] ManutencaoVeiculoModel manutencaoVeiculoModel)
-
+        public async Task Post([FromBody] ManutencaoVeiculoModel manutencao)
         {
-            _manutencaoVeiculoNegocio.Inserir(manutencaoVeiculoModel);
-
+            manutencao.DataInclusao = DateTime.Now;
+            manutencao.DataAlteracao = null;
+            await _manutencaoVeiculoNegocio.Inserir(manutencao);
         }
 
-        [HttpGet()]
-
-        public async Task<List<ManutencaoVeiculoModel>> Get()
-
-        {
-
-            return _manutencaoVeiculoNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public ManutencaoVeiculoModel Get([FromQuery] int id)
-        {
-            return _manutencaoVeiculoNegocio.Obter(id);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] ManutencaoVeiculoModel manutencaoVeiculoModel)
-
+        public async Task Put([FromBody] ManutencaoVeiculoModel manutencao)
         {
-
-            _manutencaoVeiculoNegocio.Alterar(manutencaoVeiculoModel);
-
+            manutencao.DataAlteracao = DateTime.Now;
+            await _manutencaoVeiculoNegocio.Alterar(manutencao);
         }
-
 
         [HttpDelete()]
-        public void Delete([FromQuery] int id)
+        public async Task Delete([FromQuery] int id)
         {
-            _manutencaoVeiculoNegocio.Excluir(id);
-        }
 
+            await _manutencaoVeiculoNegocio.Excluir(id);
+        }
 
     }
 }

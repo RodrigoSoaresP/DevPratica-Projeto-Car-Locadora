@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarLocadora.Negocio.CategoriaNegocio
+namespace CarLocadora.Negocio.Categoria
 {
     public interface ICategoriaNegocio
     {
-        List<Categoria> ObterLista();
+        Task<List<CategoriaModel>> ObterLista();
+        Task<CategoriaModel> Obter(int id);
+        Task Alterar(CategoriaModel categoria);
+        Task Inserir(CategoriaModel categoria);
+        Task Excluir(int id);
 
-        void Incluir(Categoria categoria);
-
-        void Alterar(Categoria categoria);
-
-        void Excluir(int id);
+      
     }
 }

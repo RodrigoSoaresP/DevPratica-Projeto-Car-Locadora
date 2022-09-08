@@ -1,8 +1,6 @@
 ﻿using CarLocadora.Front.Models;
 using CarLocadora.Front.Servico;
 using CarLocadora.Modelo;
-using CarLocadora.Models;
-using CarLocadora.Servico;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -12,7 +10,7 @@ namespace CarLocadora.Front.Controllers
 {
     public class FormaPagamentoController : Controller
     {
-        
+
         private string mensagem = string.Empty;
 
         private readonly IOptions<DadosBase> _dadosBase;
@@ -24,17 +22,14 @@ namespace CarLocadora.Front.Controllers
         }
 
         // GET: FormaPagamentoController
-        public ActionResult Index(string? mensagem = null, bool sucesso = true)
+        public async Task<IActionResult> Index()
         {
-            if (sucesso)
-                TempData["sucesso"] = mensagem;
-            else
-                TempData["erro"] = mensagem;
+            
 
             HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
             HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento").Result;
 
@@ -49,14 +44,9 @@ namespace CarLocadora.Front.Controllers
             }
         }
 
-        // GET: FormaPagamentoController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: FormaPagamentoController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
@@ -64,7 +54,7 @@ namespace CarLocadora.Front.Controllers
         // POST: FormaPagamentoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm] FormaPagamentoModel model)
+        public async Task<IActionResult> Create([FromForm] FormaPagamentoModel model)
         {
             try
             {
@@ -74,7 +64,7 @@ namespace CarLocadora.Front.Controllers
                     HttpClient client = new();
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
                     HttpResponseMessage response = client.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento", model).Result;
 
@@ -103,14 +93,14 @@ namespace CarLocadora.Front.Controllers
         }
 
         // GET: FormaPagamentoController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento/ObterDados?Id={id}").Result;
+            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento/ObterDados?Id={id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -126,7 +116,7 @@ namespace CarLocadora.Front.Controllers
         // POST: FormaPagamentoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([FromForm] FormaPagamentoModel model)
+        public async Task<IActionResult> Edit([FromForm] FormaPagamentoModel model)
         {
             try
             {
@@ -135,9 +125,9 @@ namespace CarLocadora.Front.Controllers
                     HttpClient client = new();
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-                    HttpResponseMessage response = client.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento", model).Result;
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento", model);
 
                     if (response.IsSuccessStatusCode)
                         return RedirectToAction(nameof(Index), new { mensagem = "Registro editado!", sucesso = true });
@@ -160,16 +150,16 @@ namespace CarLocadora.Front.Controllers
         }
 
         //// GET: FormaPagamentoController/Delete/5
-        //public ActionResult Delete(int id)
+        //public async Task<IActionResult>Delete(int id)
         //{
         //    try
         //    {
         //        HttpClient client = new();
         //        client.DefaultRequestHeaders.Accept.Clear();
         //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-        //        HttpResponseMessage response = client.DeleteAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento?Id={id}").Result;
+        //        HttpResponseMessage response = await client.DeleteAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento?Id={id}");
 
         //        if (response.IsSuccessStatusCode)
         //            return RedirectToAction(nameof(Index), new { mensagem = "Registro deletado!", sucesso = true });
@@ -188,7 +178,7 @@ namespace CarLocadora.Front.Controllers
         //// POST: FormaPagamentoController/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
+        //public async Task<IActionResult>Delete(int id, IFormCollection collection)
         //{
         //    try
         //    {

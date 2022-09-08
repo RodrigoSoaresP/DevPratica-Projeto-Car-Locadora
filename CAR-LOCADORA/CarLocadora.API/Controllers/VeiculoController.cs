@@ -7,58 +7,56 @@ namespace CarLocadora.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
+    [Authorize]
     public class VeiculoController : ControllerBase
     {
         private readonly IVeiculoNegocio _veiculoNegocio;
 
-        public VeiculoController(IVeiculoNegocio veiculoNegocio)
+        public VeiculoController(IVeiculoNegocio veiculo)
         {
-            _veiculoNegocio = veiculoNegocio;
+            _veiculoNegocio = veiculo;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<VeiculoModel>> Get()
+        {
+
+            return await _veiculoNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<VeiculoModel> Get([FromQuery] int placa)
+        {
+
+            return await _veiculoNegocio.Obter(placa);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] VeiculoModel veiculo)
-
+        public async Task Post([FromBody] VeiculoModel veiculo)
         {
-            _veiculoNegocio.Inserir(veiculo);
-
+            veiculo.DataInclusao = DateTime.Now;
+            veiculo.DataAlteracao = null;
+            await _veiculoNegocio.Inserir(veiculo);
         }
 
-        [HttpGet()]
-
-        public async Task<List<VeiculoModel>> Get()
-
-        {
-
-            return _veiculoNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public VeiculoModel Get([FromQuery] string placa)
-        {
-            return _veiculoNegocio.Obter(placa);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] VeiculoModel veiculo)
-
+        public async Task Put([FromBody] VeiculoModel veiculo)
         {
-
-            _veiculoNegocio.Alterar(veiculo);
-
+            veiculo.DataAlteracao = DateTime.Now;
+            await _veiculoNegocio.Alterar(veiculo);
         }
 
+        [HttpDelete()]
+        public async Task Delete([FromQuery] int placa)
+        {
 
-        //[HttpDelete()]
-        //public void Delete([FromQuery] string placa)
-        //{
-        //    _veiculoNegocio.Excluir(placa);
-        //}
-
+            await _veiculoNegocio.Excluir(placa);
+        }
 
     }
 }

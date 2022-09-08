@@ -12,55 +12,51 @@ namespace CarLocadora.API.Controllers
     {
         private readonly ILocacaoNegocio _locacaoNegocio;
 
-        public LocacaoController(ILocacaoNegocio locacaoNegocio)
+        public LocacaoController(ILocacaoNegocio locacao)
         {
-            _locacaoNegocio = locacaoNegocio;
+            _locacaoNegocio = locacao;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<LocacaoModel>> Get()
+        {
+
+            return await _locacaoNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<LocacaoModel> Get([FromQuery] int id)
+        {
+
+            return await _locacaoNegocio.Obter(id);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] LocacaoModel locacao)
-
+        public async Task Post([FromBody] LocacaoModel locacao)
         {
             locacao.DataInclusao = DateTime.Now;
             locacao.DataAlteracao = null;
-            _locacaoNegocio.Inserir(locacao);
-
+            await _locacaoNegocio.Inserir(locacao);
         }
 
-        [HttpGet()]
-
-        public async Task<List<LocacaoModel>> Get()
-
-        {
-
-            return _locacaoNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public LocacaoModel Get([FromQuery] int id)
-        {
-            return _locacaoNegocio.Obter(id);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] LocacaoModel locacao)
-
+        public async Task Put([FromBody] LocacaoModel locacao)
         {
-
-            _locacaoNegocio.Alterar(locacao);
-
+            locacao.DataAlteracao = DateTime.Now;
+            await _locacaoNegocio.Alterar(locacao);
         }
-
 
         [HttpDelete()]
-        public void Delete([FromQuery] int id)
+        public async Task Delete([FromQuery] int id)
         {
-            _locacaoNegocio.Excluir(id);
-        }
 
+            await _locacaoNegocio.Excluir(id);
+        }
 
     }
 }

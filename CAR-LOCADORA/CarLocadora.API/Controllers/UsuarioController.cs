@@ -7,58 +7,56 @@ namespace CarLocadora.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   
+    [Authorize]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioNegocio _usuarioNegocio;
 
-        public UsuarioController(IUsuarioNegocio usuarioNegocio)
+        public UsuarioController(IUsuarioNegocio usuario)
         {
-            _usuarioNegocio = usuarioNegocio;
+            _usuarioNegocio = usuario;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<UsuarioModel>> Get()
+        {
+
+            return await _usuarioNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<UsuarioModel> Get([FromQuery] int cpf)
+        {
+
+            return await _usuarioNegocio.Obter(cpf);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] UsuarioModel usuario)
-
+        public async Task Post([FromBody] UsuarioModel usuario)
         {
-            _usuarioNegocio.Inserir(usuario);
-
+            usuario.DataInclusao = DateTime.Now;
+            usuario.DataAlteracao = null;
+            await _usuarioNegocio.Inserir(usuario);
         }
 
-        [HttpGet()]
-
-        public async Task<List<UsuarioModel>> Get()
-
-        {
-
-            return _usuarioNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public UsuarioModel Get([FromQuery] string cpf)
-        {
-            return _usuarioNegocio.Obter(cpf);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] UsuarioModel usuario)
-
+        public async Task Put([FromBody] UsuarioModel usuario)
         {
-
-            _usuarioNegocio.Alterar(usuario);
-
+            usuario.DataAlteracao = DateTime.Now;
+            await _usuarioNegocio.Alterar(usuario);
         }
 
+        [HttpDelete()]
+        public async Task Delete([FromQuery] int cpf)
+        {
 
-        //[HttpDelete()]
-        //public void Delete([FromQuery] string cpg)
-        //{
-        //    _usuarioNegocio.Excluir(cpf);
-        //}
-
+            await _usuarioNegocio.Excluir(cpf);
+        }
 
     }
 }

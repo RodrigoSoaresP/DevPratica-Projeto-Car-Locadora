@@ -1,20 +1,13 @@
 ﻿using CarLocadora.Modelo;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CarLocadora.Negocio.UsuarioNegocio
+namespace CarLocadora.Negocio.Usuario
 {
     public interface IUsuarioNegocio
     {
-        List<Usuario> ObterLista();
-
-        void Incluir(Usuario usuario);
-
-        void Alterar(Usuario usuario);
-
-
-
+        Task<List<UsuarioModel>> ObterLista();
+        Task<UsuarioModel> Obter(int cpf);
+        Task Alterar(UsuarioModel usuario);
+        Task Inserir(UsuarioModel usuario);
+        Task Excluir(int id);
     }
 }

@@ -1,42 +1,39 @@
 ﻿using CarLocadora.Infra.Entity;
 using CarLocadora.Modelo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace CarLocadora.Negocio.ClienteNegocio
+namespace CarLocadora.Negocio.Cliente
 {
     public class ClienteNegocio : IClienteNegocio
     {
         private readonly Context _context;
 
-            public ClienteNegocio(Context context)
+        public async Task<List<ClienteModel>> ObterLista()
         {
-            _context = context;
+            return await _context.Clientes.OrderBy(x => x.CPF).ToListAsync();
         }
-
-
-        public void Incluir(Cliente cliente)
+        public async Task<ClienteModel> Obter(int cpf)
         {
-            _context.Clientes.Add(cliente);
-            _context.SaveChanges();
+            return await _context.Clientes.SingleAsync(x => x.CPF.Equals(cpf));
+
         }
-
-        public List<Cliente> ObterLista()
-        {
-            //return _context.Clientes.ToList();
-            return _context.Clientes.OrderBy(x => x.Nome).ToList();
-        }
-
-    
-
-        public void Alterar(Cliente cliente)
+        public async Task Alterar(ClienteModel cliente)
         {
             _context.Clientes.Update(cliente);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-      
+        public async Task Inserir(ClienteModel cliente)
+        {
+            _context.Clientes.AddAsync(cliente);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Excluir(int cliente)
+        {
+            var id = _context.Clientes.Single(x => x.CPF.Equals(cliente));
+            _context.Clientes.Remove(id);
+            _context.SaveChanges();
+
+        }
     }
 }

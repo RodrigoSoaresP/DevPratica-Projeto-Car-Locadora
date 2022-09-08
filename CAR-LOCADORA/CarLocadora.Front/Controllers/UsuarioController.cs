@@ -1,8 +1,6 @@
 ﻿using CarLocadora.Front.Models;
 using CarLocadora.Front.Servico;
 using CarLocadora.Modelo;
-using CarLocadora.Models;
-using CarLocadora.Servico;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -23,23 +21,19 @@ namespace CarLocadora.Front.Controllers
         }
 
         // GET: UsuarioController
-        public ActionResult Index(string? mensagem = null, bool sucesso = true)
+        public async Task<IActionResult> Index()
         {
-            if (sucesso)
-                TempData["sucesso"] = mensagem;
-            else
-                TempData["erro"] = mensagem;
-
+           
             HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Usuario").Result;
+            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Usuario");
 
             if (response.IsSuccessStatusCode)
             {
-                string conteudo = response.Content.ReadAsStringAsync().Result;
+                string conteudo = await response.Content.ReadAsStringAsync();
                 return View(JsonConvert.DeserializeObject<List<UsuarioModel>>(conteudo));
             }
             else
@@ -48,14 +42,10 @@ namespace CarLocadora.Front.Controllers
             }
         }
 
-        // GET: UsuarioController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+
 
         // GET: UsuarioController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
@@ -63,7 +53,7 @@ namespace CarLocadora.Front.Controllers
         // POST: UsuarioController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm] UsuarioModel model)
+        public async Task<IActionResult> Create([FromForm] UsuarioModel model)
         {
             try
             {
@@ -73,9 +63,9 @@ namespace CarLocadora.Front.Controllers
                     HttpClient client = new();
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-                    HttpResponseMessage response = client.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Usuario", model).Result;
+                    HttpResponseMessage response = await client.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Usuario", model);
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -102,18 +92,18 @@ namespace CarLocadora.Front.Controllers
         }
 
         // GET: UsuarioController/Edit/5
-        public ActionResult Edit(string CPF)
+        public async Task<IActionResult> Edit(string CPF)
         {
             HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Usuario/ObterDados?CPF={CPF}").Result;
+            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Usuario/ObterDados?CPF={CPF}");
 
             if (response.IsSuccessStatusCode)
             {
-                string conteudo = response.Content.ReadAsStringAsync().Result;
+                string conteudo = await response.Content.ReadAsStringAsync();
                 return View(JsonConvert.DeserializeObject<UsuarioModel>(conteudo));
             }
             else
@@ -125,7 +115,7 @@ namespace CarLocadora.Front.Controllers
         // POST: UsuarioController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([FromForm] UsuarioModel model)
+        public async Task<IActionResult> Edit([FromForm] UsuarioModel model)
         {
             try
             {
@@ -134,10 +124,10 @@ namespace CarLocadora.Front.Controllers
                     HttpClient client = new();
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _apiToken.Obter());
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
 
-                    HttpResponseMessage response = client.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Usuario", model).Result;
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Usuario", model);
 
                     if (response.IsSuccessStatusCode)
                         return RedirectToAction(nameof(Index), new { mensagem = "Registro editado!", sucesso = true });
@@ -160,7 +150,7 @@ namespace CarLocadora.Front.Controllers
         }
 
         //// GET: UsuarioController/Delete/5
-        //public ActionResult Delete(string cpf)
+        //public async Task<IActionResult>Delete(string cpf)
         //{
         //    try
         //    {
@@ -189,7 +179,7 @@ namespace CarLocadora.Front.Controllers
         //// POST: UsuarioController/Delete/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(string cpf, IFormCollection collection)
+        //public async Task<IActionResult>Delete(string cpf, IFormCollection collection)
         //{
         //    try
         //    {

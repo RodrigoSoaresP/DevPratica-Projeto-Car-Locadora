@@ -12,58 +12,51 @@ namespace CarLocadora.API.Controllers
     {
         private readonly IVistoriaNegocio _vistoriaNegocio;
 
-        public VistoriaController(IVistoriaNegocio vistoriaNegocio)
+        public VistoriaController(IVistoriaNegocio vistoria)
         {
-            _vistoriaNegocio = vistoriaNegocio;
+            _vistoriaNegocio = vistoria;
+        }
+
+        [HttpGet("ObterLista")]
+
+        public async Task<List<VistoriaModel>> Get()
+        {
+
+            return await _vistoriaNegocio.ObterLista();
+
+        }
+
+
+        [HttpGet("ObterDados")]
+
+        public async Task<VistoriaModel> Get([FromQuery] int id)
+        {
+
+            return await _vistoriaNegocio.Obter(id);
         }
 
         [HttpPost()]
-
-        public void Post([FromBody] VistoriaModel vistoria)
-
+        public async Task Post([FromBody] VistoriaModel vistoria)
         {
             vistoria.DataInclusao = DateTime.Now;
             vistoria.DataAlteracao = null;
-            _vistoriaNegocio.Inserir(vistoria);
-
+            await _vistoriaNegocio.Inserir(vistoria);
         }
 
-        [HttpGet()]
-
-        public async Task<List<VistoriaModel>> Get()
-
-        {
-
-            return _vistoriaNegocio.ObterLista();
-
-        }
-
-        [HttpGet("ObterDados")]
-        public VistoriaModel Get([FromQuery] int id)
-        {
-            return _vistoriaNegocio.Obter(id);
-        }
 
         [HttpPut()]
-
-        public void Put([FromBody] VistoriaModel vistoria)
-
+        public async Task Put([FromBody] VistoriaModel vistoria)
         {
-
-            _vistoriaNegocio.Alterar(vistoria);
-            vistoria.DataAlteracao = null;
-            vistoria.DataInclusao = DateTime.Now;
-    
-
+            vistoria.DataAlteracao = DateTime.Now;
+            await _vistoriaNegocio.Alterar(vistoria);
         }
-
 
         [HttpDelete()]
-        public void Delete([FromQuery] int id)
+        public async Task Delete([FromQuery] int id)
         {
-            _vistoriaNegocio.Excluir(id);
-        }
 
+            await _vistoriaNegocio.Excluir(id);
+        }
 
     }
 }
