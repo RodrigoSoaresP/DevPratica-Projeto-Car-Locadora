@@ -8,9 +8,14 @@ namespace CarLocadora.Negocio.ManutencaoVeiculo
     {
         private readonly Context _context;
 
+        public ManutencaoVeiculoNegocio(Context context)
+        {
+            _context = context;
+        }
+
         public async Task<List<ManutencaoVeiculoModel>> ObterLista()
         {
-            return await _context.ManutencaoVeiculo.OrderBy(x => x.Id).ToListAsync();
+            return await _context.ManutencaoVeiculo.ToListAsync();
         }
         public async Task<ManutencaoVeiculoModel> Obter(int id)
         {

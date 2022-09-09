@@ -17,7 +17,7 @@ namespace CarLocadora.API.Controllers
             _usuarioNegocio = usuario;
         }
 
-        [HttpGet("ObterLista")]
+        [HttpGet()]
 
         public async Task<List<UsuarioModel>> Get()
         {
@@ -29,10 +29,10 @@ namespace CarLocadora.API.Controllers
 
         [HttpGet("ObterDados")]
 
-        public async Task<UsuarioModel> Get([FromQuery] int cpf)
+        public async Task<UsuarioModel> Get([FromQuery] string CPF)
         {
 
-            return await _usuarioNegocio.Obter(cpf);
+            return await _usuarioNegocio.Obter(CPF);
         }
 
         [HttpPost()]
@@ -51,12 +51,12 @@ namespace CarLocadora.API.Controllers
             await _usuarioNegocio.Alterar(usuario);
         }
 
-        [HttpDelete()]
-        public async Task Delete([FromQuery] int cpf)
-        {
+        //[HttpDelete()]
+        //public async Task Delete([FromQuery] int cpf)
+        //{
 
-            await _usuarioNegocio.Excluir(cpf);
-        }
+        //    await _usuarioNegocio.Excluir(cpf);
+        //}
 
     }
 }

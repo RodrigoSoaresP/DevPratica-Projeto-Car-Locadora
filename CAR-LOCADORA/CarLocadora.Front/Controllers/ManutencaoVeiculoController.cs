@@ -47,7 +47,7 @@ namespace CarLocadora.Front.Controllers
         // GET: ManutencaoVeiculoController/Create
         public async Task<IActionResult> Create()
         {
-            ViewBag.Veiculos = CarregarVeiculos();
+            ViewBag.Veiculos = await CarregarVeiculos();
 
             return View();
         }
@@ -80,7 +80,8 @@ namespace CarLocadora.Front.Controllers
                 }
                 else
                 {
-                    TempData["erro"] = "Algum campo deve estar faltando o seu preenchimento!";
+                    ViewBag.Veiculos = await CarregarVeiculos();
+                    TempData["erro"] = "Algum campo deve estar faltando preenchimento";
                     return View();
                 }
             }
@@ -103,7 +104,7 @@ namespace CarLocadora.Front.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                ViewBag.Veiculos = CarregarVeiculos();
+                ViewBag.Veiculos = await CarregarVeiculos();
                 string conteudo = response.Content.ReadAsStringAsync().Result;
                 return View(JsonConvert.DeserializeObject<ManutencaoVeiculoModel>(conteudo));
             }
@@ -137,7 +138,8 @@ namespace CarLocadora.Front.Controllers
                 }
                 else
                 {
-                    TempData["erro"] = "Algum campo deve estar faltando o seu preenchimento!";
+                    ViewBag.Veiculos = await CarregarVeiculos();
+                    TempData["erro"] = "Algum campo deve estar faltando preenchimento";
                     return View();
                 }
             }

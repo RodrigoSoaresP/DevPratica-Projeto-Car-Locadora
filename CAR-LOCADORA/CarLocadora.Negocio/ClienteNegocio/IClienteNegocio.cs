@@ -5,10 +5,10 @@ namespace CarLocadora.Negocio.Cliente
     public interface IClienteNegocio
     {
         Task<List<ClienteModel>> ObterLista();
-        Task<ClienteModel> Obter(int cpf);
+        Task<ClienteModel> Obter(string CPF);
         Task Alterar(ClienteModel cliente);
         Task Inserir(ClienteModel cliente);
-        Task Excluir(int cpf);
+        //Task Excluir(string CPF);
     }
 
     

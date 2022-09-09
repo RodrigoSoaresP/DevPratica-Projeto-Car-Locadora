@@ -8,14 +8,18 @@ namespace CarLocadora.Negocio.Usuario
     {
         private readonly Context _context;
 
-    
+        public UsuarioNegocio(Context context)
+        {
+            _context = context;
+        }
+
         public async Task<List<UsuarioModel>> ObterLista()
         {
-            return await _context.Usuarios.OrderBy(x => x.CPF).ToListAsync();
+            return await _context.Usuarios.ToListAsync();
         }
-        public async Task<UsuarioModel> Obter(int cpf)
+        public async Task<UsuarioModel> Obter(string CPF)
         {
-            return await _context.Usuarios.SingleAsync(x => x.CPF.Equals(cpf));
+            return await _context.Usuarios.SingleAsync(x => x.CPF.Equals(CPF));
 
         }
         public async Task Alterar(UsuarioModel usuario)
@@ -29,12 +33,12 @@ namespace CarLocadora.Negocio.Usuario
             await _context.SaveChangesAsync();
         }
 
-        public async Task Excluir(int usuario)
-        {
-            var id = _context.Usuarios.Single(x => x.CPF.Equals(usuario));
-            _context.Usuarios.Remove(id);
-            _context.SaveChanges();
+        //public async Task Excluir(int usuario)
+        //{
+        //    var id = _context.Usuarios.Single(x => x.CPF.Equals(usuario));
+        //    _context.Usuarios.Remove(id);
+        //    _context.SaveChanges();
 
-        }
+        //}
     }
 }

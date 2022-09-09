@@ -17,7 +17,7 @@ namespace CarLocadora.API.Controllers
             _vistoriaNegocio = vistoria;
         }
 
-        [HttpGet("ObterLista")]
+        [HttpGet()]
 
         public async Task<List<VistoriaModel>> Get()
         {

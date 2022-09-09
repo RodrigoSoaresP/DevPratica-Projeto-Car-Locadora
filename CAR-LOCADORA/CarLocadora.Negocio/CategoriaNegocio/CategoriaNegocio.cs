@@ -13,10 +13,14 @@ namespace CarLocadora.Negocio.Categoria
     public class CategoriaNegocio : ICategoriaNegocio
     {
         private readonly Context _context;
+        public CategoriaNegocio(Context context)
+        {
+            _context = context;
+        }
 
         public async Task<List<CategoriaModel>> ObterLista()
         {
-            return await _context.Categorias.OrderBy(x => x.Id).ToListAsync();
+            return await _context.Categorias.ToListAsync();
         }
         public async Task<CategoriaModel> Obter(int id)
         {

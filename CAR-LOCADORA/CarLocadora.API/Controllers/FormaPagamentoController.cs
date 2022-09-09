@@ -16,7 +16,7 @@ namespace CarLocadora.API.Controllers
             _formaPagamentoNegocio = pagamento;
         }
 
-        [HttpGet("ObterLista")]
+        [HttpGet()]
 
         public async Task<List<FormaPagamentoModel>> Get()
         {

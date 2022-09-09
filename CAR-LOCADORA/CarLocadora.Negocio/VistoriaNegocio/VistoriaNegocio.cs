@@ -8,9 +8,14 @@ namespace CarLocadora.Negocio.Vistoria
     {
         private readonly Context _context;
 
+        public VistoriaNegocio(Context context)
+        {
+            _context = context;
+        }
+
         public async Task<List<VistoriaModel>> ObterLista()
         {
-            return await _context.Vistorias.OrderBy(x => x.Id).ToListAsync();
+            return await _context.Vistorias.ToListAsync();
         }
         public async Task<VistoriaModel> Obter(int model)
         {

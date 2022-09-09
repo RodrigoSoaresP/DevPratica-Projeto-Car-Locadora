@@ -17,7 +17,7 @@ namespace CarLocadora.API.Controllers
             _categoriaNegocio = categoria;
         }
 
-        [HttpGet("ObterLista")]
+        [HttpGet()]
 
         public async Task<List<CategoriaModel>> Get()
         {

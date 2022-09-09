@@ -2,6 +2,7 @@
 using CarLocadora.Front.Servico;
 using CarLocadora.Modelo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -23,7 +24,7 @@ namespace CarLocadora.Front.Controllers
         // GET: VeiculoController
         public async Task<IActionResult> Index()
         {
-           
+
 
             HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Clear();
@@ -47,7 +48,9 @@ namespace CarLocadora.Front.Controllers
         // GET: VeiculoController/Create
         public async Task<IActionResult> Create()
         {
+            ViewBag.CategoriasDeVeiculos = CategoriasDeVeiculos().Result;         
             return View();
+      
         }
 
         // POST: VeiculoController/Create
@@ -103,6 +106,9 @@ namespace CarLocadora.Front.Controllers
 
             if (response.IsSuccessStatusCode)
             {
+
+
+                ViewBag.CategoriasDeVeiculos = CategoriasDeVeiculos();
                 string conteudo = await response.Content.ReadAsStringAsync();
                 return View(JsonConvert.DeserializeObject<VeiculoModel>(conteudo));
             }
@@ -148,46 +154,89 @@ namespace CarLocadora.Front.Controllers
             }
         }
 
-        //// GET: VeiculoController/Delete/5
-        //public async Task<IActionResult>Delete(string placa)
-        //{
-        //    try
-        //    {
-        //        HttpClient client = new();
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
 
-        //        HttpResponseMessage response = await client.DeleteAsync($"{_dadosBase.Value.API_URL_BASE}Veiculo?Placa={placa}");
 
-        //        if (response.IsSuccessStatusCode)
-        //            return RedirectToAction(nameof(Index), new { mensagem = "Registro deletado!", sucesso = true });
-        //        else
-        //            throw new Exception("Algo deu errado");
+        private async Task<List<SelectListItem>> CategoriasDeVeiculos()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>();
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData["erro"] = " Não foi possível realizar a exlusão" + ex.Message;
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
 
-        //        return View();
-        //    }
-        //}
 
-        //// POST: VeiculoController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult>Delete(string veiculo, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}Categoria");
+
+            if (response.IsSuccessStatusCode)
+            {
+                string conteudo = await response.Content.ReadAsStringAsync();
+                List<CategoriaModel> categorias = JsonConvert.DeserializeObject<List<CategoriaModel>>(conteudo);
+
+                foreach (var linha in categorias)
+                {
+                    lista.Add(new SelectListItem()
+                    {
+                        Value = linha.Id.ToString(),
+                        Text = linha.Descricao,
+                        Selected = false,
+                    });
+                }
+
+                return lista;
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+        }
     }
 }
+
+
+
+            //// GET: VeiculoController/Delete/5
+            //public async Task<IActionResult>Delete(string placa)
+            //{
+            //    try
+            //    {
+            //        HttpClient client = new();
+            //        client.DefaultRequestHeaders.Accept.Clear();
+            //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
+
+
+            //        HttpResponseMessage response = await client.DeleteAsync($"{_dadosBase.Value.API_URL_BASE}Veiculo?Placa={placa}");
+
+            //        if (response.IsSuccessStatusCode)
+            //            return RedirectToAction(nameof(Index), new { mensagem = "Registro deletado!", sucesso = true });
+            //        else
+            //            throw new Exception("Algo deu errado");
+
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        TempData["erro"] = " Não foi possível realizar a exlusão" + ex.Message;
+
+            //        return View();
+            //    }
+            //}
+
+            //// POST: VeiculoController/Delete/5
+            //[HttpPost]
+            //[ValidateAntiForgeryToken]
+            //public async Task<IActionResult>Delete(string veiculo, IFormCollection collection)
+            //{
+            //    try
+            //    {
+            //        return RedirectToAction(nameof(Index));
+            //    }
+            //    catch
+            //    {
+            //        return View();
+            //    }
+            //}
+
+
+

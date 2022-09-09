@@ -8,9 +8,14 @@ namespace CarLocadora.Negocio.Locacao
     {
         private readonly Context _context;
 
+        public LocacaoNegocio(Context context)
+        {
+            _context = context;
+        }
+
         public async Task<List<LocacaoModel>> ObterLista()
         {
-            return await _context.Locacao.OrderBy(x => x.Id).ToListAsync();
+            return await _context.Locacao.ToListAsync();
         }
         public async Task<LocacaoModel> Obter(int id)
         {

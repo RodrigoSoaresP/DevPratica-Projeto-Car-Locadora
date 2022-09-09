@@ -17,7 +17,7 @@ namespace CarLocadora.API.Controllers
             _veiculoNegocio = veiculo;
         }
 
-        [HttpGet("ObterLista")]
+        [HttpGet()]
 
         public async Task<List<VeiculoModel>> Get()
         {
@@ -29,7 +29,7 @@ namespace CarLocadora.API.Controllers
 
         [HttpGet("ObterDados")]
 
-        public async Task<VeiculoModel> Get([FromQuery] int placa)
+        public async Task<VeiculoModel> Get([FromQuery] string placa)
         {
 
             return await _veiculoNegocio.Obter(placa);
@@ -45,10 +45,10 @@ namespace CarLocadora.API.Controllers
 
 
         [HttpPut()]
-        public async Task Put([FromBody] VeiculoModel veiculo)
+        public async Task Put([FromBody] VeiculoModel placa)
         {
-            veiculo.DataAlteracao = DateTime.Now;
-            await _veiculoNegocio.Alterar(veiculo);
+            placa.DataAlteracao = DateTime.Now;
+            await _veiculoNegocio.Alterar(placa);
         }
 
         [HttpDelete()]

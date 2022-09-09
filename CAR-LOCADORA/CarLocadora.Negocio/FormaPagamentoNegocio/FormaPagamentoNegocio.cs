@@ -8,9 +8,14 @@ namespace CarLocadora.Negocio.FormasPagamento
     {
         private readonly Context _context;
 
+        public FormaPagamentoNegocio(Context context)
+        {
+            _context = context;
+        }
+
         public async Task<List<FormaPagamentoModel>> ObterLista()
         {
-            return await _context.FormasPagamento.OrderBy(x => x.Id).ToListAsync();
+            return await _context.FormasPagamento.ToListAsync();
         }
         public async Task<FormaPagamentoModel> Obter(int id)
         {

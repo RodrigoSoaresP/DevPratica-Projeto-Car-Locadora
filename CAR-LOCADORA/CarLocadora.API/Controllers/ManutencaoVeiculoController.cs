@@ -17,7 +17,7 @@ namespace CarLocadora.API.Controllers
             _manutencaoVeiculoNegocio = manutencao;
         }
 
-        [HttpGet("ObterLista")]
+        [HttpGet()]
 
         public async Task<List<ManutencaoVeiculoModel>> Get()
         {

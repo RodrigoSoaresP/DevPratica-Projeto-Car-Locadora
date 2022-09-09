@@ -8,18 +8,23 @@ namespace CarLocadora.Negocio.Veiculo
     {
         private readonly Context _context;
 
+        public VeiculoNegocio(Context context)
+        {
+            _context = context;
+        }
+
         public async Task<List<VeiculoModel>> ObterLista()
         {
-            return await _context.Veiculos.OrderBy(x => x.Placa).ToListAsync();
+            return await _context.Veiculos.ToListAsync();
         }
-        public async Task<VeiculoModel> Obter(int placa)
+        public async Task<VeiculoModel> Obter(string placa)
         {
             return await _context.Veiculos.SingleAsync(x => x.Placa.Equals(placa));
 
         }
-        public async Task Alterar(VeiculoModel veiculo)
+        public async Task Alterar(VeiculoModel placa)
         {
-            _context.Veiculos.Update(veiculo);
+            _context.Veiculos.Update(placa);
             await _context.SaveChangesAsync();
         }
         public async Task Inserir(VeiculoModel veiculo)
