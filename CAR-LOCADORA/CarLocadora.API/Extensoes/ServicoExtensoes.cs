@@ -2,8 +2,11 @@
 using CarLocadora.Negocio.Categoria;
 using CarLocadora.Negocio.Cliente;
 using CarLocadora.Negocio.FormasPagamento;
+using CarLocadora.Negocio.Locacao;
+using CarLocadora.Negocio.ManutencaoVeiculo;
 using CarLocadora.Negocio.Usuario;
 using CarLocadora.Negocio.Veiculo;
+using CarLocadora.Negocio.Vistoria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -106,11 +109,13 @@ namespace CarLocadora.API.Extensoes
                 services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
                 services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
                 services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-            }
+                services.AddHttpClient();
+        }
 
 
             public static void ConfigurarServicos(this IServiceCollection services)
         {
+          
 
             string connectionString = "Data Source=localhost,1433;User ID=sa;Password=senha@1234;Initial Catalog=DBCarLocadora;";
 
@@ -118,8 +123,13 @@ namespace CarLocadora.API.Extensoes
             services.AddScoped<ICategoriaNegocio, CategoriaNegocio>();
             services.AddScoped<IClienteNegocio, ClienteNegocio>();
             services.AddScoped<IFormaPagamentoNegocio, FormaPagamentoNegocio>();
+            services.AddScoped<ILocacaoNegocio, LocacaoNegocio>();
+            services.AddScoped<IManutencaoVeiculoNegocio, ManutencaoVeiculoNegocio>();
             services.AddScoped<IUsuarioNegocio, UsuarioNegocio>();
             services.AddScoped<IVeiculoNegocio, VeiculoNegocio>();
+            services.AddScoped<IVistoriaNegocio, VistoriaNegocio>();
+            services.AddHttpClient();
+
         }
 
 

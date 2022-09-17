@@ -14,24 +14,25 @@ namespace CarLocadora.Front.Controllers
         private string mensagem = string.Empty;
 
         private readonly IOptions<DadosBase> _dadosBase;
+        private readonly HttpClient _httpClient;
         private readonly IApiToken _apiToken;
-        public FormaPagamentoController(IOptions<DadosBase> dadosBase, IApiToken apiToken)
+
+        public FormaPagamentoController(IOptions<DadosBase> dadosBase, IApiToken apiToken, IHttpClientFactory httpClient)
+
         {
             _dadosBase = dadosBase;
             _apiToken = apiToken;
+            _httpClient = httpClient.CreateClient();
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         // GET: FormaPagamentoController
         public async Task<IActionResult> Index()
         {
             
-
-            HttpClient client = new();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
-
-            HttpResponseMessage response = client.GetAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento").Result;
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
+            HttpResponseMessage response = _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento").Result;
 
             if (response.IsSuccessStatusCode)
             {
@@ -61,12 +62,8 @@ namespace CarLocadora.Front.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    HttpClient client = new();
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
-
-                    HttpResponseMessage response = client.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento", model).Result;
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
+                    HttpResponseMessage response = _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento", model).Result;
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -95,12 +92,9 @@ namespace CarLocadora.Front.Controllers
         // GET: FormaPagamentoController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            HttpClient client = new();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
-
-            HttpResponseMessage response = await client.GetAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento/ObterDados?Id={id}");
+           
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento/ObterDados?Id={id}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -122,12 +116,9 @@ namespace CarLocadora.Front.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    HttpClient client = new();
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
-
-                    HttpResponseMessage response = await client.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento", model);
+                   
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
+                    HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento", model);
 
                     if (response.IsSuccessStatusCode)
                         return RedirectToAction(nameof(Index), new { mensagem = "Registro editado!", sucesso = true });
@@ -149,45 +140,42 @@ namespace CarLocadora.Front.Controllers
             }
         }
 
-        //// GET: FormaPagamentoController/Delete/5
-        //public async Task<IActionResult>Delete(int id)
-        //{
-        //    try
-        //    {
-        //        HttpClient client = new();
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
+        // GET: FormaPagamentoController/Delete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
 
-        //        HttpResponseMessage response = await client.DeleteAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento?Id={id}");
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _apiToken.Obter());
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_dadosBase.Value.API_URL_BASE}FormaPagamento?Id={id}");
 
-        //        if (response.IsSuccessStatusCode)
-        //            return RedirectToAction(nameof(Index), new { mensagem = "Registro deletado!", sucesso = true });
-        //        else
-        //            throw new Exception("Algo deu errado");
+                if (response.IsSuccessStatusCode)
+                    return RedirectToAction(nameof(Index), new { mensagem = "Registro deletado!", sucesso = true });
+                else
+                    throw new Exception("Algo deu errado");
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData["erro"] = " Não foi possível realizar a exlusão" + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["erro"] = " Não foi possível realizar a exlusão" + ex.Message;
 
-        //        return View();
-        //    }
-        //}
+                return View();
+            }
+        }
 
-        //// POST: FormaPagamentoController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult>Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        // POST: FormaPagamentoController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }
