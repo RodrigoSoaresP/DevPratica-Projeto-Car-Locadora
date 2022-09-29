@@ -33,12 +33,17 @@ namespace CarLocadora.Negocio.Cliente
             await _context.SaveChangesAsync();
         }
 
-        //public async Task Excluir(int cliente)
-        //{
-        //    var id = _context.Clientes.Single(x => x.CPF.Equals(cliente));
-        //    _context.Clientes.Remove(id);
-        //    _context.SaveChanges();
+        public async Task Excluir(string cliente)
+        {
+            var CPF = _context.Clientes.Single(x => x.CPF.Equals(cliente));
+            _context.Clientes.Remove(CPF);
+            _context.SaveChanges();
 
-        //}
+        }
+
+        public async Task<List<ClienteModel>> ObterListaEnviarEmail()
+        {
+            return await _context.Clientes.Where(e => e.Email != null && e.EmailEnviado.Equals(false)).ToListAsync();
+        }
     }
 }

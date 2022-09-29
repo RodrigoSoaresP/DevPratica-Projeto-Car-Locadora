@@ -51,12 +51,21 @@ namespace CarLocadora.API.Controllers
             await _clienteNegocio.Alterar(cliente);
         }
 
-        //[HttpDelete()]
-        //public async Task Delete([FromQuery] int cpf)
-        //{
+        [HttpDelete()]
+        public async Task Delete([FromQuery] string cpf)
+        {
 
-        //    await _clienteNegocio.Excluir(cpf);
-        //}
+   
+            await _clienteNegocio.Excluir(cpf);
+        }
+
+        [HttpGet("ObterListaEnviarEmail")]
+        public async Task<List<ClienteModel>> GetObterListaEnviarEmail()
+        {
+            return await _clienteNegocio.ObterListaEnviarEmail();
+        }
+
+
 
     }
 }

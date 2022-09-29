@@ -2,7 +2,7 @@
 
 
 <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="CPF" class="control-label"></label>
 			<input asp-for="CPF" class="form-control maskCPF" />
@@ -10,7 +10,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			<label asp-for="CNH" class="control-label"></label>
 			<input asp-for="CNH" class="form-control" />
@@ -18,7 +18,7 @@
 		</div>
 	</div>
 
-	<div class="col-md-6">
+	<div class="col-md-8">
 		<div class="form-group">
 			<label asp-for="Nome" class="control-label"></label>
 			<input asp-for="Nome" class="form-control" />
@@ -44,6 +44,23 @@
 		</div>
 	</div>
 
+	<div class="col-md-2">
+		<div class="form-group">
+			<label asp-for="DataNascimento" class="control-label"></label>
+			<input asp-for="DataNascimento" class="form-control " />
+			<span asp-validation-for="DataNascimento" class="text-danger"></span>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+			<label asp-for="Email" class="control-label"></label>
+			<input asp-for="Email" class="form-control" />
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+	</div>
+</div>
+<br />
+<div class="row">
 	<div class="col-md-6">
 		<div class="form-group">
 			<label asp-for="Logradouro" class="control-label"></label>
@@ -52,17 +69,6 @@
 		</div>
 	</div>
 
-	<div class="col-md-2">
-		<div class="form-group">
-			<label asp-for="Numero" class="control-label"></label>
-			<input asp-for="Numero" class="form-control" />
-			<span asp-validation-for="Numero" class="text-danger"></span>
-		</div>
-	</div>
-</div>
-
-   <br />
-<div class="row">
 	<div class="col-md-5">
 		<div class="form-group">
 			<label asp-for="Complemento" class="control-label"></label>
@@ -70,14 +76,24 @@
 			<span asp-validation-for="Complemento" class="text-danger"></span>
 		</div>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-1">
+		<div class="form-group">
+			<label asp-for="Numero" class="control-label"></label>
+			<input asp-for="Numero" class="form-control" />
+			<span asp-validation-for="Numero" class="text-danger"></span>
+		</div>
+	</div>
+</div>
+<br />
+<div class="row">
+	<div class="col-md-3">
 		<div class="form-group">
 			<label asp-for="Cidade" class="control-label"></label>
 			<input asp-for="Cidade" class="form-control" />
 			<span asp-validation-for="Cidade" class="text-danger"></span>
 		</div>
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-1">
 		<div class="form-group">
 			<label asp-for="Estado" class="control-label"></label>
 			<input asp-for="Estado" class="form-control" />

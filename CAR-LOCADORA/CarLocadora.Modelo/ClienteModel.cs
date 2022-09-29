@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarLocadora.Modelo
@@ -30,7 +31,7 @@ namespace CarLocadora.Modelo
         [Required(ErrorMessage = "Data de Nascimento é obrigatório.")]
         public DateTime DataNascimento { get; set; }
 
-
+        [StringLength(15, MinimumLength = 14, ErrorMessage = "Preenchimento mínimo de 14 caracteres e máximo de 15")]
         public string? Telefone { get; set; }
 
 
@@ -49,6 +50,13 @@ namespace CarLocadora.Modelo
 
         [Display(Name = "Data de Alteração")]
         public DateTime? DataAlteracao { get; set; }
+
+        [StringLength(100, ErrorMessage = "Este campo deve ter no maximo 100 caracteres.")]
+        public string? Email { get; set; }
+
+
+        [DefaultValue("false")]
+        public bool EmailEnviado { get; set; }
 
     }
 
