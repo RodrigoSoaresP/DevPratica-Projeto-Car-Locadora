@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CarLocadora.Models
+namespace CarLocadora.Modelo
 {
     public class LoginRequisicaoModel
     {

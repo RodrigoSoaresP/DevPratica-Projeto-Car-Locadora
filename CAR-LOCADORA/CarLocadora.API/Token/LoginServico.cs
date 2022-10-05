@@ -1,4 +1,5 @@
-﻿using CarLocadora.Models;
+﻿using CarLocadora.Modelo;
+
 
 namespace CarLocadora.Token
 {

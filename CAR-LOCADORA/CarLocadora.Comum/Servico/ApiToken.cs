@@ -1,15 +1,17 @@
-﻿using CarLocadora.Front.Models;
-using CarLocadora.Models;
+﻿using CarLocadora.Modelo;
+using CarLocadora.Comum.Modelo;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
-namespace CarLocadora.Servico
+namespace CarLocadora.Comum.Servico
 {
-    public class ApiToken
+    public class ApiToken : IApiToken
     {
         private readonly IOptions<DadosBase> _dadosBase;
         private readonly IOptions<LoginRespostaModel> _loginRespostaModel;
+      
 
         public ApiToken(IOptions<DadosBase> dadosBase, IOptions<LoginRespostaModel> loginRespostaModel)
         {
@@ -17,7 +19,7 @@ namespace CarLocadora.Servico
             _loginRespostaModel = loginRespostaModel;
         }
 
-        private void ObterToken()
+        private async Task ObterToken()
         {
             HttpClient cliente = new();
             cliente.DefaultRequestHeaders.Accept.Clear();
@@ -29,7 +31,7 @@ namespace CarLocadora.Servico
                 Senha = "SenhaDevPratica"
             };
 
-            HttpResponseMessage response = cliente.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Login", loginRequisicaoModel).Result;
+            HttpResponseMessage response = await cliente.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Login", loginRequisicaoModel);
 
             if (response.IsSuccessStatusCode)
             {
@@ -50,20 +52,22 @@ namespace CarLocadora.Servico
             }
         }
 
-        public string Obter()
+        public async Task<string> Obter()
         {
             if (_loginRespostaModel.Value.Autenticado == false)
             {
-                ObterToken();
+                await ObterToken();
             }
             else
             {
                 if (DateTime.Now >= _loginRespostaModel.Value.DataExpiracao)
                 {
-                    ObterToken();
+                   await  ObterToken();
                 }
             }
             return _loginRespostaModel.Value.Token;
         }
+
+       
     }
 }

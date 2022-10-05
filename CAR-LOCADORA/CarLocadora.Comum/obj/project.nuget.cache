@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "fdcDNo+nvbW9mpQ267ado2vos7t9jePgwL3ot5WlpfGYe935/InTpRu6Jo+4/AifuhQU9X2ewJpOTMEcejjDEg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rodrigo.pereira\\Desktop\\CAR-LOCADORA\\Projeto-Car-Locadora\\CAR-LOCADORA\\CarLocadora.Comum\\CarLocadora.Comum.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\rodrigo.pereira\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

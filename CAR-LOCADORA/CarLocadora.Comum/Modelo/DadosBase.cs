@@ -1,4 +1,4 @@
-﻿namespace CarLocadora.Front.Models
+﻿namespace CarLocadora.Comum.Modelo
 {
     public class DadosBase
     {
